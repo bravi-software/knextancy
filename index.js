@@ -1,8 +1,19 @@
+// setup ES6 Proxy shim
+require('harmony-reflect');
 
-var knex = require('knex')(require('./knexfile').development);
+
+var knex = require('knex'),
+    proxyClientTenant = require('./lib/proxy-client-tenant');
 
 
-knex('tenant-1:users').where({
+var baseKnex = knex(require('./knexfile').development);
+
+
+var proxyKney = knex({ __client__: proxyClientTenant(baseKnex.client, 'tenant-1')});
+
+
+
+proxyKney('$tenant:users').where({
   name: 'Test'
 }).select('name').then(function (users) {
   console.log(users);

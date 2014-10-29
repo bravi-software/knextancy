@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "harmony-reflect": "^1.1.0",
     "knex": "^0.7.3",
-    "mysql": "^2.5.2"
+    "mysql": "^2.5.2",
+    "underscore": "^1.7.0"
   }
 }
