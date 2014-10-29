@@ -1,0 +1,9 @@
+{
+  "undef": true,
+  "unused": true,
+  "esnext": true,
+  "indent": 2,
+  "noempty": true,
+  "node": true,
+  "multistr": true
+}
