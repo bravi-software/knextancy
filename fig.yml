@@ -16,4 +16,3 @@ knex:
     - .:/usr/src/app
   links:
     - mysql:mysql
-  command: node --harmony index.js
