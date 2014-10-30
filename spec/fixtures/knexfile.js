@@ -1,8 +1,6 @@
-// Update with your config settings.
-
 module.exports = {
 
-  development: {
+  test: {
     client: 'mysql',
     connection: {
       multipleStatements: true,
@@ -12,10 +10,10 @@ module.exports = {
       database : process.env.MYSQL_ENV_MYSQL_DATABASE
     },
     migrations: {
-      directory: './db/migrations'
+      directory: './spec/fixtures/db/migrations'
     },
     seeds: {
-      directory: './db/seeds'
+      directory: './spec/fixtures/db/seeds'
     }
   }
 

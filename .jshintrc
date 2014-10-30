@@ -5,5 +5,12 @@
   "indent": 2,
   "noempty": true,
   "node": true,
-  "multistr": true
+  "multistr": true,
+  "globals": {
+    "describe": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "it": false,
+    "xit": false
+  }
 }

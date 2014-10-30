@@ -4,7 +4,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/jshint lib/"
+    "test": "./node_modules/.bin/jshint lib/ spec/ && NODE_ENV=test ./node_modules/.bin/mocha --harmony --reporter spec ./spec/**/*.spec.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +15,8 @@
     "underscore": "^1.7.0"
   },
   "devDependencies": {
-    "jshint": "^2.5.7"
+    "chai": "^1.9.1",
+    "jshint": "^2.5.0",
+    "mocha": "^1.18.2"
   }
 }
