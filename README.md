@@ -64,6 +64,14 @@ The `knextancy.middleware` expects two parameters:
 * `knex` instance;
 * `options.header` the name of the HTTP header that will contain the tenant id.
 
+## Tests
+
+To run the tests using [Fig](http://fig.sh/):
+
+```bash
+fig run test
+```
+
 ## Troubleshooting
 
 ### Error: proxies not supported on this platform
