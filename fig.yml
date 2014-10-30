@@ -8,11 +8,10 @@ mysql:
     - 'MYSQL_USER=root'
     - 'MYSQL_DATABASE=multitenant'
 
-knex:
+test:
   build: .
-  ports:
-    - '80'
   volumes:
     - .:/usr/src/app
   links:
     - mysql:mysql
+  command: npm test
