@@ -9,7 +9,7 @@ var knextancy = require('knextancy');
 
 knextancy.tenant(knex, tenantId).then(function (tenantKnex) {
 
-  tenantKnex('$tenant:users').where({
+  tenantKnex('$_users').where({
     first_name: 'Test',
     last_name:  'User'
   }).select('id')
@@ -19,7 +19,7 @@ knextancy.tenant(knex, tenantId).then(function (tenantKnex) {
 
 Its `tenant` method expects a `knex` instance and a `tenantId` and returns **Promise** for a special `tenantKnex` instance that scopes every queries to the particular tenant.
 
-The only requirement is that every query is written using the special `$tenant:` prefix for every table name.
+The only requirement is that every query is written using the special `$_` prefix for every table name.
 
 ## Migrations
 
@@ -31,7 +31,7 @@ This special naming convention also applies while writing migrations, for exampl
 'use strict';
 
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('$tenant:users', function (table) {
+  return knex.schema.createTable('$_users', function (table) {
     table.string('name');
   });
 };
@@ -53,7 +53,7 @@ var app = express();
 app.use(knextancy.middleware(knex, { header: 'x-client-id' }));
 
 app.get('/', function (req, res, next) {
-  req.knex.select().from('$tenant:users').then(function (users) {
+  req.knex.select().from('$_users').then(function (users) {
     res.send(users);
   }, next);
 });

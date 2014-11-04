@@ -16,7 +16,7 @@ describe("connect-middleware with default settings", function() {
     app.use(knextancy.middleware(knex));
 
     app.get('/', function (req, res) {
-      req.knex.select().from('$tenant:users').then(function (users) {
+      req.knex.select().from('$_users').then(function (users) {
         res.send(users);
       });
     });
@@ -25,10 +25,10 @@ describe("connect-middleware with default settings", function() {
   describe("given some data in tenant 01 and tenant 02", function() {
     beforeEach(function() {
       return knextancy.tenant(knex, '01').then(function (tenantKnex) {
-        return tenantKnex('$tenant:users').insert({ name: 'Paulo' });
+        return tenantKnex('$_users').insert({ name: 'Paulo' });
       }).then(function () {
         return knextancy.tenant(knex, '02').then(function (tenantKnex) {
-          return tenantKnex('$tenant:users').insert({ name: 'Pedro' });
+          return tenantKnex('$_users').insert({ name: 'Pedro' });
         });
       });
     });
