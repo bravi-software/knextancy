@@ -41,7 +41,7 @@ describe("connect-middleware with default settings", function() {
         .end(function (err, res) {
           if (err) { return done(err); }
 
-          expect(res.body).to.eql([ { name: 'Paulo' } ]);
+          expect(res.body).to.eql([ { id: 1, name: 'Paulo', role_id: null } ]);
           done();
         });
     });

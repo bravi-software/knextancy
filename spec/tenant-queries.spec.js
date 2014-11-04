@@ -29,4 +29,40 @@ describe("tenant queries", function() {
       });
     });
   });
+
+  describe('joins', function () {
+    beforeEach(function() {
+      return knextancy.tenant(knex, '01').then(function (tenantKnex) {
+        return tenantKnex('$_roles').insert({ name: 'Admin' }).then(function (result) {
+          return tenantKnex('$_users').insert({ name: 'Paulo', role_id: result[0] });
+        });
+      });
+    });
+
+    it('should return the result without the tenant ids in the table names', function () {
+      return knextancy.tenant(knex, '01').then(function (tenantKnex) {
+        return tenantKnex
+          .select()
+          .from('$_users')
+          .leftJoin('$_roles', '$_users.role_id', '$_roles.id')
+          .options({ nestTables: true })
+          .then(function (result) {
+            expect(result).to.eql([{
+                "$_roles": {
+                  "id": 1,
+                  "name": "Admin"
+                },
+                "$_users": {
+                  "id": 1,
+                  "name": "Paulo",
+                  "role_id": 1
+                }
+              }
+            ]);
+          });
+      });
+    });
+  });
 });
+
+
