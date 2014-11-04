@@ -8,17 +8,20 @@
   },
   "author": "",
   "license": "ISC",
+  "peerDependencies": {
+    "knex": "^0.7.3"
+  },
   "dependencies": {
     "harmony-reflect": "^1.1.0",
-    "knex": "^0.7.3",
-    "mysql": "^2.5.2",
     "underscore": "^1.7.0"
   },
   "devDependencies": {
     "chai": "^1.9.1",
     "express": "^4.10.1",
+    "mysql": "^2.5.2",
     "jshint": "^2.5.0",
     "mocha": "^1.18.2",
-    "supertest": "^0.14.0"
+    "supertest": "^0.14.0",
+    "knex": "^0.7.3"
   }
 }
