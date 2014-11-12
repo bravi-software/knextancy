@@ -20,4 +20,4 @@ ci:
   build: .
   links:
     - mysql:mysql
-  command: npm test
+  command: "/bin/bash -c 'sleep 15 && npm test'"
