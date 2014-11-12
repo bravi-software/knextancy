@@ -9,6 +9,9 @@ var knextancy = require('knextancy');
 
 knextancy.tenant(knex, tenantId).then(function (tenantKnex) {
 
+  // the tenantKnex object contains the tenantId as an attribute
+  console.log(tenantKnex.tenantId);
+
   tenantKnex('$_users').where({
     first_name: 'Test',
     last_name:  'User'
