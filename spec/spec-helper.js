@@ -1,3 +1,7 @@
+// setup ES6 Proxy shim
+require('harmony-reflect');
+
+
 var fs = require('fs'),
     path = require('path');
 
