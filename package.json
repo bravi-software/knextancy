@@ -12,7 +12,7 @@
     "knex": "^0.7.3"
   },
   "dependencies": {
-    "lru-cache": "^2.5.0",
+    "rsvp": "^3.0.18",
     "underscore": "^1.7.0"
   },
   "devDependencies": {

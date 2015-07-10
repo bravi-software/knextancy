@@ -6,6 +6,7 @@
   "noempty": true,
   "node": true,
   "multistr": true,
+  "predef": [ "-Promise" ],
   "globals": {
     "describe": false,
     "beforeEach": false,
