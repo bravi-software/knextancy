@@ -4,7 +4,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/jshint lib/ spec/ && NODE_ENV=test ./node_modules/.bin/mocha --harmony --timeout 20000 --reporter spec ./spec/**/*.spec.js"
+    "test": "jshint lib/ spec/ && NODE_ENV=test mocha --harmony --timeout 20000 --reporter spec ./spec/**/*.spec.js"
   },
   "author": "",
   "license": "ISC",
