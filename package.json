@@ -1,6 +1,6 @@
 {
   "name": "knextancy",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Small library that provides a way of implementing multi-tenancy using table prefixes.",
   "main": "lib/index.js",
   "scripts": {
@@ -21,9 +21,9 @@
     "mysql",
     "postgres"
   ],
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/bravi-software/knextancy"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bravi-software/knextancy"
   },
   "bugs": "https://github.com/bravi-software/knextancy/issues",
   "license": "MIT",
