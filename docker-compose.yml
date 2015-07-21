@@ -10,7 +10,7 @@ mysql:
 
 test:
   build: .
-  command: waitdb-test
+  command: npm run waitdb-test
   volumes:
     - .:/usr/src/app
   links:
@@ -18,6 +18,6 @@ test:
 
 ci:
   build: .
-  command: waitdb-test
+  command: npm run waitdb-test
   links:
     - mysql:mysql
