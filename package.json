@@ -4,7 +4,9 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jshint lib/ spec/ && NODE_ENV=test mocha --harmony --timeout 20000 --reporter spec ./spec/**/*.spec.js"
+    "test": "jshint lib/ spec/ && NODE_ENV=test mocha --harmony --timeout 20000 --reporter spec ./spec/**/*.spec.js",
+    "waitdb": "waitforit -full-connection $MYSQL_PORT -timeout 60",
+    "waitdb-test": "npm run waitdb && npm test"
   },
   "author": "",
   "license": "ISC",
