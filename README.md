@@ -89,10 +89,15 @@ Use [Babel](http://babeljs.io/).
 
 #### harmony-reflect
 
-To enable it in Node.js (in its current version 0.10), it is required to enable the **harmony** flag while executing your appilation:
+To enable it in Node.js (in its current version 0.10), it is required to enable the **harmony** flag while executing your application:
 
 ```js
 node --harmony index.js
 ```
 
-And make sure you have `harmony-reflect` installed as a dependency
+And make sure you have `harmony-reflect` installed as a dependency and requires it in your main file:
+
+```js
+// enables ES6 Proxy (requires --harmony)
+require('harmony-reflect');
+```
