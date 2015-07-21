@@ -1,15 +1,32 @@
 {
   "name": "knextancy",
   "version": "0.0.0",
-  "description": "",
+  "description": "Small library that provides a way of implementing multi-tenancy using table prefixes.",
   "main": "lib/index.js",
   "scripts": {
     "test": "jshint lib/ spec/ && NODE_ENV=test mocha --harmony --timeout 20000 --reporter spec ./spec/**/*.spec.js",
     "waitdb": "waitforit -full-connection $MYSQL_PORT -timeout 60",
     "waitdb-test": "npm run waitdb && npm test"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Bravi (http://www.bravi.com.br)",
+  "contributors": [
+    "Eduardo Nunes (https://github.com/esnunes)",
+    "Max Claus Nunes (https://github.com/maxcnunes)",
+    "Paulo Ragonha (https://github.com/pirelenito)"
+  ],
+  "keywords": [
+    "knex",
+    "multi",
+    "tenancy",
+    "mysql",
+    "postgres"
+  ],
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/bravi-software/knextancy"
+  },
+  "bugs": "https://github.com/bravi-software/knextancy/issues",
+  "license": "MIT",
   "peerDependencies": {
     "knex": "^0.7.3"
   },
