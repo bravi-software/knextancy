@@ -69,10 +69,10 @@ The `knextancy.middleware` expects two parameters:
 
 ## Tests
 
-To run the tests using [Fig](http://fig.sh/):
+To run the tests using [Docker Compose](https://docs.docker.com/compose/):
 
 ```bash
-fig run test
+docker-compose run test
 ```
 
 ## Troubleshooting
