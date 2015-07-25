@@ -15,6 +15,9 @@ test:
     - .:/usr/src/app
   links:
     - mysql:mysql
+  environment:
+    # DEBUG: knextancy:tenant
+
 
 ci:
   build: .

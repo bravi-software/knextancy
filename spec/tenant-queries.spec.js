@@ -64,5 +64,3 @@ describe("tenant queries", function() {
     });
   });
 });
-
-
