@@ -2,7 +2,7 @@ var knex = require('./spec-helper').knex,
     expect = require('chai').expect;
 
 
-var knextancy = require('../lib');
+var knextancy = require('../src');
 
 
 describe("tenant", function() {

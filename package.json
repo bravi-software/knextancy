@@ -2,9 +2,9 @@
   "name": "knextancy",
   "version": "1.0.0",
   "description": "Small library that provides a way of implementing multi-tenancy using table prefixes.",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "jshint lib/ spec/ && NODE_ENV=test mocha --harmony --timeout 20000 --reporter spec ./spec/**/*.spec.js",
+    "test": "jshint src/ spec/ && NODE_ENV=test mocha --harmony --timeout 20000 --reporter spec ./spec/**/*.spec.js",
     "waitdb": "waitforit -full-connection $MYSQL_PORT -timeout 60",
     "waitdb-test": "npm run waitdb && npm test"
   },

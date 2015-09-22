@@ -4,7 +4,7 @@ var express = require('express'),
     expect = require('chai').expect;
 
 
-var knextancy = require('../lib');
+var knextancy = require('../src');
 
 
 describe("connect-middleware with default settings", function() {
