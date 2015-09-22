@@ -30,7 +30,7 @@ export default function (baseKnex, tenantId) {
     let promises = waiting[tenantId];
     if (!promises) { promises = waiting[tenantId] = []; }
 
-    promises.push({ resolve: resolve, reject: reject });
+    promises.push({ resolve, reject });
 
     if (promises.length > 1) {
       debug('the knex for this tenant %d is already been built', tenantId);
@@ -51,14 +51,10 @@ export default function (baseKnex, tenantId) {
       return proxyKnex.seed.run();
     }).then(function () {
       cache[tenantId] = proxyKnex;
-      promises.forEach(function (p) {
-        p.resolve(proxyKnex);
-      });
+      promises.forEach(p => p.resolve(proxyKnex));
       delete waiting[tenantId];
     }).catch(function (e) {
-      promises.forEach(function (p) {
-        p.reject(proxyKnex);
-      });
+      promises.forEach(p => p.reject(proxyKnex));
       delete waiting[tenantId];
 
       console.error('Error on initializing the multi tenant database', e, e.stack);

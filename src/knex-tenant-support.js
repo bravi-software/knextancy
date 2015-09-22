@@ -48,30 +48,27 @@ export function install () {
     return sql;
   }));
 
-  override(knex.Client.prototype.Runner.prototype, 'query', after(function(promise, originalArgs) {
+  override(knex.Client.prototype.Runner.prototype, 'query', after(async function(promise, originalArgs) {
     debug('knex.Client.prototype.Runner.prototype.query', arguments);
     const options = originalArgs[0].options;
 
-    const client = this.client;
-    return promise.then(function(result) {
-      if (!options || !options.nestTables) return result;
+    const result = await promise;
+    if (!options || !options.nestTables) {
+      return result;
+    }
 
-      return result.map(function (row) {
-        const processedRow = {};
-
-        Object.keys(row).forEach(function (tableJoinName) {
-          processedRow[unapplyTenant(tableJoinName, client.tenantId)] = row[tableJoinName];
-        });
-
+    return result.map(row => {
+      return Object.keys(row).reduce((processedRow, tableJoinName) => {
+        processedRow[unapplyTenant(tableJoinName, this.client.tenantId)] = row[tableJoinName];
         return processedRow;
-      });
+      }, {});
     });
   }));
 }
 
 
 function unapplyTenant (sql, tenant) {
-  const regexp = new RegExp('^(' + tenant + '+_)');
+  const regexp = new RegExp(`^(${tenant}_)`);
   return sql.replace(regexp, '$_');
 }
 
