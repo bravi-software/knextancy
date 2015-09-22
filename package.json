@@ -2,7 +2,7 @@
   "name": "knextancy",
   "version": "1.0.0",
   "description": "Small library that provides a way of implementing multi-tenancy using table prefixes.",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "compile": "babel --stage 0 -d lib/ src/",
     "prepublish": "npm run compile",
