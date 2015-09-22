@@ -4,7 +4,9 @@
   "description": "Small library that provides a way of implementing multi-tenancy using table prefixes.",
   "main": "src/index.js",
   "scripts": {
-    "test": "jshint src/ spec/ && NODE_ENV=test mocha --harmony --timeout 20000 --reporter spec ./spec/**/*.spec.js",
+    "compile": "babel --stage 0 -d lib/ src/",
+    "prepublish": "npm run compile",
+    "test": "jshint src/ spec/ && NODE_ENV=test mocha --harmony --timeout 20000 --compilers js:babel/register --reporter spec ./spec/**/*.spec.js",
     "waitdb": "waitforit -full-connection $MYSQL_PORT -timeout 60",
     "waitdb-test": "npm run waitdb && npm test"
   },
@@ -36,13 +38,14 @@
     "underscore": "^1.7.0"
   },
   "devDependencies": {
-    "harmony-reflect": "^1.1.0",
+    "babel": "^5.8.23",
     "chai": "^1.9.1",
     "express": "^4.10.1",
-    "mysql": "^2.5.2",
+    "harmony-reflect": "^1.1.0",
     "jshint": "^2.5.0",
-    "mocha": "^1.18.2",
-    "supertest": "^0.14.0",
-    "knex": "^0.8.6"
+    "knex": "^0.8.6",
+    "mocha": "^2.3.3",
+    "mysql": "^2.5.2",
+    "supertest": "^0.14.0"
   }
 }
