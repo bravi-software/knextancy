@@ -1,5 +1,4 @@
 import knex from 'knex';
-import _ from 'underscore';
 import { override, before, after } from './override';
 
 
@@ -10,12 +9,11 @@ export function buildConfig (config, tenantId) {
   const multitenantConfig = { ...(config || {}) };
 
   multitenantConfig.tenantId = tenantId;
-
-  const migrationsMultitenantConfig = { ...(multitenantConfig.migrations || {}) };
-  multitenantConfig.migrations = _.extend(migrationsMultitenantConfig, {
+  multitenantConfig.migrations = {
+    ...(multitenantConfig.migrations || {}),
     // custom migration with the table name prefix
     tableName: `${tenantId}_${(multitenantConfig.migrations.tableName || 'knex_migrations')}`,
-  });
+  };
 
   return multitenantConfig;
 }

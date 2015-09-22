@@ -33,9 +33,7 @@
     "knex": "^0.8.6"
   },
   "dependencies": {
-    "debug": "^2.2.0",
-    "rsvp": "^3.0.18",
-    "underscore": "^1.7.0"
+    "debug": "^2.2.0"
   },
   "devDependencies": {
     "babel": "^5.8.23",
