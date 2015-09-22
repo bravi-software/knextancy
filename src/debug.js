@@ -1,6 +1,4 @@
-var debug = require('debug');
+import debug from 'debug';
 
 
-module.exports = function (namespace) {
-  return debug('knextancy:' + (namespace || '*'));
-};
+export default (namespace) => debug(`knextancy:${namespace || '*'}`);

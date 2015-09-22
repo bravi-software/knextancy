@@ -1,14 +1,12 @@
-var express = require('express'),
-    request = require('supertest'),
-    knex = require('./spec-helper').knex,
-    expect = require('chai').expect;
+import express from 'express';
+import request from 'supertest';
+import { knex } from './spec-helper';
+import { expect } from 'chai';
+import knextancy from '../src';
 
 
-var knextancy = require('../src');
-
-
-describe("connect-middleware with default settings", function() {
-  var app;
+describe('connect-middleware with default settings', function() {
+  let app;
 
   beforeEach(function() {
     app = express();
@@ -22,7 +20,7 @@ describe("connect-middleware with default settings", function() {
     });
   });
 
-  describe("given some data in tenant 01 and tenant 02", function() {
+  describe('given some data in tenant 01 and tenant 02', function() {
     beforeEach(function() {
       return knextancy.tenant(knex, '01').then(function (tenantKnex) {
         return tenantKnex('$_users').insert({ name: 'Paulo' });
@@ -33,7 +31,7 @@ describe("connect-middleware with default settings", function() {
       });
     });
 
-    it("should be possible to access the request's knex and query a tenant data", function(done) {
+    it('should be possible to access the request\'s knex and query a tenant data', function(done) {
       request(app)
         .get('/')
         .set('x-client-id', '01')
@@ -46,7 +44,7 @@ describe("connect-middleware with default settings", function() {
         });
     });
 
-    it("should throw an error if the 'x-client-id' header is not set", function(done) {
+    it('should throw an error if the "x-client-id" header is not set', function(done) {
       request(app)
         .get('/')
         .expect(500)

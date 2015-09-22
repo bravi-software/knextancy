@@ -2,14 +2,14 @@
 require('harmony-reflect');
 
 
-var fs = require('fs'),
-    path = require('path');
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 
-var truncateTablesSQL = fs.readFileSync(path.join(__dirname, './spec-helper.sql'), { encoding: 'utf8' });
+const truncateTablesSQL = readFileSync(join(__dirname, './spec-helper.sql'), { encoding: 'utf8' });
 
 
-var knex = require('knex')(require('./fixtures/knexfile').test);
+const knex = require('knex')(require('./fixtures/knexfile').test);
 
 
 beforeEach(function() {
@@ -19,15 +19,15 @@ beforeEach(function() {
 
 function truncateAllTables () {
   return knex.raw(truncateTablesSQL).then(function (sql) {
-    sql = sql[0].map(function (sqlQuery) {
+    const _sqlQuery = sql[0].map(function (sqlQuery) {
       return sqlQuery.trucate_table_cmd;
     }).join('');
 
-    return knex.raw(sql);
+    return knex.raw(_sqlQuery);
   });
 }
 
 
-module.exports = {
-  knex: knex
+export default {
+  knex: knex,
 };

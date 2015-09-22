@@ -1,6 +1,4 @@
-'use strict';
-
-exports.up = function(knex) {
+export function up (knex) {
   return knex.schema.createTable('$_roles', function (table) {
     table.increments('id').primary();
     table.string('name');
@@ -9,8 +7,8 @@ exports.up = function(knex) {
       table.integer('role_id').unsigned().references('id').inTable('$_roles');
     });
   });
-};
+}
 
-exports.down = function() {
+export function down () {
   // TODO: Implement
-};
+}

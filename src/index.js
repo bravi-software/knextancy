@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   tenant: require('./tenant'),
-  middleware: require('./connect-middleware')
+  middleware: require('./connect-middleware'),
 };

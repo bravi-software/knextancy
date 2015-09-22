@@ -1,31 +1,31 @@
-var knex = require('knex');
-var _ = require('underscore');
-var override = require('./override').override;
-var before = require('./override').before;
-var after = require('./override').after;
-var debug = require('./debug')('client-multi-tenant');
+import knex from 'knex';
+import _ from 'underscore';
+import { override, before, after } from './override';
 
 
-exports.buildConfig = function (config, tenantId) {
-  var multitenantConfig = _.clone(config || {});
+const debug = require('./debug')('client-multi-tenant');
+
+
+export function buildConfig (config, tenantId) {
+  const multitenantConfig = { ...(config || {}) };
 
   multitenantConfig.tenantId = tenantId;
 
-  var migrationsMultitenantConfig = _.clone(multitenantConfig.migrations || {});
+  const migrationsMultitenantConfig = { ...(multitenantConfig.migrations || {}) };
   multitenantConfig.migrations = _.extend(migrationsMultitenantConfig, {
     // custom migration with the table name prefix
-    tableName: tenantId + '_' + (multitenantConfig.migrations.tableName || 'knex_migrations')
+    tableName: `${tenantId}_${(multitenantConfig.migrations.tableName || 'knex_migrations')}`,
   });
 
   return multitenantConfig;
-};
+}
 
 
-exports.install = function () {
+export function install () {
   Object.defineProperty(knex.Client.prototype, 'tenantId', {
     get: function() {
       return this.config.tenantId;
-    }
+    },
   });
 
   override(knex.Client.prototype.QueryBuilder.prototype, 'toSQL', after(function(sql) {
@@ -36,16 +36,15 @@ exports.install = function () {
 
   override(knex.Client.prototype.Raw.prototype, 'set', before(function(sql, bindings) {
     debug('knex.Client.prototype.Raw.prototype.set', arguments);
-    sql = applyTenant(sql, this.client.tenantId);
-    return [sql, bindings];
+    const tenantSQL = applyTenant(sql, this.client.tenantId);
+    return [tenantSQL, bindings];
   }));
 
   override(knex.Client.prototype.SchemaBuilder.prototype, 'toSQL', after(function(sql) {
     debug('knex.Client.prototype.SchemaBuilder.prototype.toSQL', arguments);
-    var client = this.client;
 
-    sql.forEach(function (sql) {
-      sql.sql = applyTenant(sql.sql, client.tenantId);
+    sql.forEach(q => {
+      q.sql = applyTenant(q.sql, this.client.tenantId);
     });
 
     return sql;
@@ -53,14 +52,14 @@ exports.install = function () {
 
   override(knex.Client.prototype.Runner.prototype, 'query', after(function(promise, originalArgs) {
     debug('knex.Client.prototype.Runner.prototype.query', arguments);
-    var options = originalArgs[0].options;
+    const options = originalArgs[0].options;
 
-    var client = this.client;
+    const client = this.client;
     return promise.then(function(result) {
       if (!options || !options.nestTables) return result;
 
       return result.map(function (row) {
-        var processedRow = {};
+        const processedRow = {};
 
         Object.keys(row).forEach(function (tableJoinName) {
           processedRow[unapplyTenant(tableJoinName, client.tenantId)] = row[tableJoinName];
@@ -70,11 +69,11 @@ exports.install = function () {
       });
     });
   }));
-};
+}
 
 
 function unapplyTenant (sql, tenant) {
-  var regexp = new RegExp('^('+tenant+'+_)');
+  const regexp = new RegExp('^(' + tenant + '+_)');
   return sql.replace(regexp, '$_');
 }
 

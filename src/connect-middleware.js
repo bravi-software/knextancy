@@ -1,23 +1,23 @@
-var _ = require('underscore'),
-    tenant = require('./tenant');
+import tenant from './tenant';
 
 /**
   Middleware that populates
  */
-module.exports = function (baseKnex, options) {
-  var opts = options || {},
-      header = opts.header || 'x-client-id';
+export default function (baseKnex, options) {
+  const opts = options || {};
+  const header = opts.header || 'x-client-id';
 
-  return function (req, res, next) {
-    var tenantId = req.header(header);
+  return function middleware (req, res, next) {
+    const tenantId = req.header(header);
+    if (typeof tenantId === 'undefined') {
+      return next(`Missing ${header} header`);
+    }
 
-    if (_.isUndefined(tenantId)) { return next('Missing ' + header + ' header'); }
-
-    var populate = function (k) {
+    const populate = function onPopulate (k) {
       req.knex = k;
       next();
     };
 
     tenant(baseKnex, tenantId).then(populate, next);
   };
-};
+}
