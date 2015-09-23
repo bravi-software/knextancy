@@ -4,7 +4,7 @@ node_js:
   - "node"
 
 env:
-  - DB_PORT=tcp://172.0.0.1:3306 DB_USER=root DB_PASSWORD="" DB_DATABASE=multitenant
+  - DB_PORT=tcp://127.0.0.1:3306 DB_USER=root DB_PASSWORD="" DB_DATABASE=multitenant
 
 before_script:
   - mysql -e 'create database multitenant;'
