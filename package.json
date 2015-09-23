@@ -33,7 +33,8 @@
     "knex": "^0.8.6"
   },
   "dependencies": {
-    "debug": "^2.2.0"
+    "debug": "^2.2.0",
+    "promise-async-cache": "^1.0.0"
   },
   "devDependencies": {
     "babel": "^5.8.23",

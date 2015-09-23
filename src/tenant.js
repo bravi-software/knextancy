@@ -1,40 +1,30 @@
 import knex from 'knex';
+import PromiseAsyncCache from 'promise-async-cache';
 import * as knexTenantSupport from './knex-tenant-support';
+
 
 const debug = require('./debug')('tenant');
 
-const cache = {};
-const waiting = {};
 let isMultiTenantSupportInstalled = false;
 
-export default function (baseKnex, tenantId) {
-  if (!isMultiTenantSupportInstalled) {
-    try {
-      debug('installing knextancy');
-      knexTenantSupport.install();
-      isMultiTenantSupportInstalled = true;
-    } catch (e) {
-      console.error('Error installing knex multi tenant support', e, e.stack);
-      throw e;
-    }
-  }
-
-  return new Promise(function (resolve, reject) {
-    const result = cache[tenantId];
-    if (result) {
-      debug('getting knex for tenant %d from cache', tenantId);
-      resolve(result);
-      return;
-    }
-
-    let promises = waiting[tenantId];
-    if (!promises) { promises = waiting[tenantId] = []; }
-
-    promises.push({ resolve, reject });
-
-    if (promises.length > 1) {
-      debug('the knex for this tenant %d is already been built', tenantId);
-      return;
+/**
+ * Keep knex tenants in memory and handle race conditions
+ */
+const cache = new PromiseAsyncCache({
+  /**
+   * Build knex tenant and load it to the cache
+   * @param tenantId
+   */
+  async load (tenantId, baseKnex) {
+    if (!isMultiTenantSupportInstalled) {
+      try {
+        debug('installing knextancy');
+        knexTenantSupport.install();
+        isMultiTenantSupportInstalled = true;
+      } catch (err) {
+        console.error('Error installing knex multi tenant support', err.stack || err);
+        throw err;
+      }
     }
 
     debug('building knex for new tenant %d', tenantId);
@@ -47,17 +37,22 @@ export default function (baseKnex, tenantId) {
     });
 
     debug('initializing multi tenant database');
-    proxyKnex.migrate.latest().then(function () {
-      return proxyKnex.seed.run();
-    }).then(function () {
-      cache[tenantId] = proxyKnex;
-      promises.forEach(p => p.resolve(proxyKnex));
-      delete waiting[tenantId];
-    }).catch(function (e) {
-      promises.forEach(p => p.reject(proxyKnex));
-      delete waiting[tenantId];
+    debug('running migration tasks');
+    await proxyKnex.migrate.latest();
 
-      console.error('Error on initializing the multi tenant database', e, e.stack);
-    });
-  });
+    debug('running seed tasks');
+    await proxyKnex.seed.run();
+
+    return proxyKnex;
+  },
+});
+
+
+export default async function (baseKnex, tenantId) {
+  try {
+    return cache.get(tenantId, baseKnex);
+  } catch (err) {
+    console.error('Error on initializing the multi tenant database', err.stack || err);
+    throw err;
+  }
 }
