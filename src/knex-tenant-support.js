@@ -51,12 +51,10 @@ export function install () {
 
   override(knex.Client.prototype.SchemaBuilder.prototype, 'toSQL', after(function(sql) {
     debug('knex.Client.prototype.SchemaBuilder.prototype.toSQL', arguments);
-
-    sql.forEach(q => {
+    return sql.map(q => {
       q.sql = applyTenant(q.sql, this.client.tenantId);
+      return q;
     });
-
-    return sql;
   }));
 
   override(knex.Client.prototype.Runner.prototype, 'query', after(async function(promise, originalArgs) {
