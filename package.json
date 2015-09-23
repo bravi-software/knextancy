@@ -4,7 +4,9 @@
   "description": "Small library that provides a way of implementing multi-tenancy using table prefixes.",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jshint lib/ spec/ && NODE_ENV=test mocha --harmony --timeout 20000 --reporter spec ./spec/**/*.spec.js",
+    "compile": "babel --stage 0 -d lib/ src/",
+    "prepublish": "npm run compile",
+    "test": "eslint src/ spec/ && NODE_ENV=test mocha --harmony --timeout 20000 --compilers js:babel/register --reporter spec ./spec/**/*.spec.js",
     "waitdb": "waitforit -full-connection $MYSQL_PORT -timeout 60",
     "waitdb-test": "npm run waitdb && npm test"
   },
@@ -31,18 +33,19 @@
     "knex": "^0.8.6"
   },
   "dependencies": {
-    "debug": "^2.2.0",
-    "rsvp": "^3.0.18",
-    "underscore": "^1.7.0"
+    "debug": "^2.2.0"
   },
   "devDependencies": {
-    "harmony-reflect": "^1.1.0",
+    "babel": "^5.8.23",
+    "babel-eslint": "^4.1.3",
     "chai": "^1.9.1",
+    "eslint": "^1.5.0",
+    "eslint-config-airbnb": "0.0.8",
     "express": "^4.10.1",
+    "harmony-reflect": "^1.1.0",
+    "knex": "^0.8.6",
+    "mocha": "^2.3.3",
     "mysql": "^2.5.2",
-    "jshint": "^2.5.0",
-    "mocha": "^1.18.2",
-    "supertest": "^0.14.0",
-    "knex": "^0.8.6"
+    "supertest": "^0.14.0"
   }
 }

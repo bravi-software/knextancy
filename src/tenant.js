@@ -1,14 +1,13 @@
-var knex = require('knex'),
-    knexTenantSupport = require('./knex-tenant-support'),
-    Promise = require('rsvp').Promise;
+import knex from 'knex';
+import * as knexTenantSupport from './knex-tenant-support';
 
-var debug = require('./debug')('tenant');
+const debug = require('./debug')('tenant');
 
-var cache = {};
-var waiting = {};
-var isMultiTenantSupportInstalled = false;
+const cache = {};
+const waiting = {};
+let isMultiTenantSupportInstalled = false;
 
-module.exports = function (baseKnex, tenantId) {
+export default function (baseKnex, tenantId) {
   if (!isMultiTenantSupportInstalled) {
     try {
       debug('installing knextancy');
@@ -21,17 +20,17 @@ module.exports = function (baseKnex, tenantId) {
   }
 
   return new Promise(function (resolve, reject) {
-    var result = cache[tenantId];
+    const result = cache[tenantId];
     if (result) {
       debug('getting knex for tenant %d from cache', tenantId);
       resolve(result);
       return;
     }
 
-    var promises = waiting[tenantId];
+    let promises = waiting[tenantId];
     if (!promises) { promises = waiting[tenantId] = []; }
 
-    promises.push({ resolve: resolve, reject: reject });
+    promises.push({ resolve, reject });
 
     if (promises.length > 1) {
       debug('the knex for this tenant %d is already been built', tenantId);
@@ -39,12 +38,12 @@ module.exports = function (baseKnex, tenantId) {
     }
 
     debug('building knex for new tenant %d', tenantId);
-    var proxyKnex = knex(knexTenantSupport.buildConfig(baseKnex.client.config, tenantId));
+    const proxyKnex = knex(knexTenantSupport.buildConfig(baseKnex.client.config, tenantId));
 
     Object.defineProperty(proxyKnex, 'tenantId', {
       get: function() {
         return this.client.tenantId;
-      }
+      },
     });
 
     debug('initializing multi tenant database');
@@ -52,17 +51,13 @@ module.exports = function (baseKnex, tenantId) {
       return proxyKnex.seed.run();
     }).then(function () {
       cache[tenantId] = proxyKnex;
-      promises.forEach(function (p) {
-        p.resolve(proxyKnex);
-      });
+      promises.forEach(p => p.resolve(proxyKnex));
       delete waiting[tenantId];
     }).catch(function (e) {
-      promises.forEach(function (p) {
-        p.reject(proxyKnex);
-      });
+      promises.forEach(p => p.reject(proxyKnex));
       delete waiting[tenantId];
 
       console.error('Error on initializing the multi tenant database', e, e.stack);
     });
   });
-};
+}
