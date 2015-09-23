@@ -22,7 +22,7 @@ const cache = new PromiseAsyncCache({
         knexTenantSupport.install();
         isMultiTenantSupportInstalled = true;
       } catch (err) {
-        console.error('Error installing knex multi tenant support', err.stack || err);
+        debug('Error installing knex multi tenant support', err.stack || err);
         throw err;
       }
     }
@@ -52,7 +52,7 @@ export default async function (baseKnex, tenantId) {
   try {
     return cache.get(tenantId, baseKnex);
   } catch (err) {
-    console.error('Error on initializing the multi tenant database', err.stack || err);
+    debug('Error on initializing the multi tenant database', err.stack || err);
     throw err;
   }
 }
