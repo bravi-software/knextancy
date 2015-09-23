@@ -5,7 +5,12 @@ import * as knexTenantSupport from './knex-tenant-support';
 
 const debug = require('./debug')('tenant');
 
+
+/**
+ * Defines whenever the tenant monkey patch on knex has been installed
+ */
 let isMultiTenantSupportInstalled = false;
+
 
 /**
  * Keep knex tenants in memory and handle race conditions
