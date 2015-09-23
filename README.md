@@ -78,30 +78,3 @@ To run the tests using [Docker Compose](https://docs.docker.com/compose/):
 ```bash
 docker-compose run test
 ```
-
-## Troubleshooting
-
-### Error: proxies not supported on this platform
-
-Knextancy requires a special feature from the next release of JavaScript called [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy).
-
-There are two ways of getting the support:
-
-#### Babel
-
-Use [Babel](http://babeljs.io/).
-
-#### harmony-reflect
-
-To enable it in Node.js (in its current version 0.10), it is required to enable the **harmony** flag while executing your application:
-
-```js
-node --harmony index.js
-```
-
-And make sure you have `harmony-reflect` installed as a dependency and requires it in your main file:
-
-```js
-// enables ES6 Proxy (requires --harmony)
-require('harmony-reflect');
-```
