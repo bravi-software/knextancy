@@ -17,10 +17,3 @@ test:
     - mysql:mysql
   environment:
     # DEBUG: knextancy:tenant
-
-
-ci:
-  build: .
-  command: npm run waitdb-test
-  links:
-    - mysql:mysql
