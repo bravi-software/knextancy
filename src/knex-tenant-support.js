@@ -5,6 +5,9 @@ import { override, before, after } from './override';
 const debug = require('./debug')('client-multi-tenant');
 
 
+/**
+ * Build knex tenant configuration changing details related to multitenant
+ */
 export function buildConfig (config, tenantId) {
   const multitenantConfig = {
     ...(config || {}),
@@ -21,6 +24,12 @@ export function buildConfig (config, tenantId) {
 }
 
 
+/**
+ * Installs the tenant monkey patch on knex.
+ *
+ * It overrides some base knex functions changing the original behavior to
+ * include multitenant configurations such as the tenant prefix in every table.
+ */
 export function install () {
   Object.defineProperty(knex.Client.prototype, 'tenantId', {
     get: function() {
