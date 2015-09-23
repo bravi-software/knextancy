@@ -18,7 +18,6 @@ let isMultiTenantSupportInstalled = false;
 const cache = new PromiseAsyncCache({
   /**
    * Build knex tenant and load it to the cache
-   * @param tenantId
    */
   async load (tenantId, baseKnex) {
     if (!isMultiTenantSupportInstalled) {
