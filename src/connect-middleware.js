@@ -7,17 +7,14 @@ export default function (baseKnex, options) {
   const opts = options || {};
   const header = opts.header || 'x-client-id';
 
-  return function middleware (req, res, next) {
+  return async function middleware (req, res, next) {
     const tenantId = req.header(header);
     if (typeof tenantId === 'undefined') {
       return next(`Missing ${header} header`);
     }
 
-    const populate = function onPopulate (k) {
-      req.knex = k;
-      next();
-    };
+    req.knex = await tenant(baseKnex, tenantId);
 
-    tenant(baseKnex, tenantId).then(populate, next);
+    next();
   };
 }

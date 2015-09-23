@@ -6,9 +6,11 @@ const debug = require('./debug')('client-multi-tenant');
 
 
 export function buildConfig (config, tenantId) {
-  const multitenantConfig = { ...(config || {}) };
+  const multitenantConfig = {
+    ...(config || {}),
+    tenantId,
+  };
 
-  multitenantConfig.tenantId = tenantId;
   multitenantConfig.migrations = {
     ...(multitenantConfig.migrations || {}),
     // custom migration with the table name prefix
