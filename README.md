@@ -1,5 +1,9 @@
 # Knextancy - knex with multitenancy
 
+[![Build Status](https://travis-ci.org/bravi-software/knextancy.svg?branch=master)](https://travis-ci.org/bravi-software/knextancy)
+[![npm version](https://badge.fury.io/js/knextancy.svg)](http://badge.fury.io/js/knextancy)
+
+
 Small library that provides a way of implementing multi-tenancy using table prefixes.
 
 It has a very simple API:
