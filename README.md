@@ -78,3 +78,7 @@ To run the tests using [Docker Compose](https://docs.docker.com/compose/):
 ```bash
 docker-compose run test
 ```
+
+## License
+
+Licensed under [The MIT License](https://github.com/bravi-software/knextancy/blob/master/LICENSE) Redistributions of files must retain the above copyright notice.
