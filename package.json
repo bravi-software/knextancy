@@ -16,6 +16,7 @@
     "Max Claus Nunes (https://github.com/maxcnunes)",
     "Paulo Ragonha (https://github.com/pirelenito)"
   ],
+  "license": "MIT",
   "keywords": [
     "knex",
     "multi",
