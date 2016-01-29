@@ -28,6 +28,8 @@ Its `tenant` method expects a `knex` instance and a `tenantId` and returns **Pro
 
 The only requirement is that every query is written using the special `$_` prefix for every table name.
 
+**Check out  [this example](https://github.com/bravi-software/knextancy-example) using knextancy with express and PostgreSQL database**
+
 ## Migrations
 
 **Knextancy** assures that all migrations are ran on a tenant's tables before returning its `knex` instance.
