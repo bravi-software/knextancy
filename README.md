@@ -48,6 +48,12 @@ exports.down = function(knex, Promise) {
 };
 ```
 
+**PS:** You may have problems creating custom column index. I created a pull request fixing it few months ago. But knex team have not accepted it yet. While that pull request is not accepted is possible to fix it using a custom name for the index:
+
+```js
+table.integer('groupId').index('index_$_groupId');
+```
+
 ## Connect Middleware
 
 It also provides a handy [Connect](https://github.com/senchalabs/connect#readme) middleware that automatically creates a `knex` instance and attaches it to the `request` object for a kiven tetant based on a special HTTP header.
