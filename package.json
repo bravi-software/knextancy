@@ -29,7 +29,6 @@
     "url": "https://github.com/bravi-software/knextancy"
   },
   "bugs": "https://github.com/bravi-software/knextancy/issues",
-  "license": "MIT",
   "peerDependencies": {
     "knex": "^0.8.6"
   },
