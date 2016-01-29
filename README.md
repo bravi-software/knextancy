@@ -76,7 +76,9 @@ The `knextancy.middleware` expects two parameters:
 To run the tests using [Docker Compose](https://docs.docker.com/compose/):
 
 ```bash
-docker-compose run test
+docker-compose run --rm test bash
+npm install # in case you have not installed yet
+npm test
 ```
 
 ## License

@@ -12,8 +12,8 @@ test:
   build: .
   command: npm run waitdb-test
   volumes:
-    - .:/usr/src/app
+    - .:/app
   links:
     - mysql:db
-  environment:
-    # DEBUG: knextancy:tenant
+  # environment:
+  #   DEBUG: knextancy:tenant
