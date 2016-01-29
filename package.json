@@ -30,7 +30,7 @@
   },
   "bugs": "https://github.com/bravi-software/knextancy/issues",
   "peerDependencies": {
-    "knex": "^0.8.6"
+    "knex": "^0.8.0 || ^0.9.0"
   },
   "dependencies": {
     "debug": "^2.2.0",
@@ -44,7 +44,7 @@
     "eslint-config-airbnb": "0.0.8",
     "express": "^4.10.1",
     "harmony-reflect": "^1.1.0",
-    "knex": "^0.8.6",
+    "knex": "^0.9.0",
     "mocha": "^2.3.3",
     "mysql": "^2.5.2",
     "supertest": "^0.14.0"
