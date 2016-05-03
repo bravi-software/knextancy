@@ -2,8 +2,10 @@ import knex from 'knex';
 import PromiseAsyncCache from 'promise-async-cache';
 import * as knexTenantSupport from './knex-tenant-support';
 
+import createDebug from './debug';
 
-const debug = require('./debug')('tenant');
+
+const debug = createDebug('tenant');
 
 
 /**

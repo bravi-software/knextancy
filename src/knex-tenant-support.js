@@ -1,8 +1,9 @@
 import knex from 'knex';
 import { override, before, after } from './override';
+import createDebug from './debug';
 
 
-const debug = require('./debug')('client-multi-tenant');
+const debug = createDebug('client-multi-tenant');
 
 
 /**

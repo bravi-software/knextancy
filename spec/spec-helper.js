@@ -4,12 +4,13 @@ require('harmony-reflect');
 
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import knexConfig from './fixtures/knexfile';
 
 
 const truncateTablesSQL = readFileSync(join(__dirname, './spec-helper.sql'), { encoding: 'utf8' });
 
 
-const knex = require('knex')(require('./fixtures/knexfile').test);
+export const knex = require('knex')(knexConfig.test);
 
 
 beforeEach(function() {
