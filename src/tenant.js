@@ -43,11 +43,15 @@ const cache = new PromiseAsyncCache({
     });
 
     debug('initializing multi tenant database');
-    debug('running migration tasks');
-    await proxyKnex.migrate.latest();
+    if (baseKnex.client.config.migrations) {
+      debug('running migration tasks');
+      await proxyKnex.migrate.latest();
+    }
 
-    debug('running seed tasks');
-    await proxyKnex.seed.run();
+    if (baseKnex.client.config.seeds) {
+      debug('running seed tasks');
+      await proxyKnex.seed.run();
+    }
 
     return proxyKnex;
   },
