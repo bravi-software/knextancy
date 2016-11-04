@@ -64,9 +64,7 @@ describe('connect-middleware with default settings', function() {
           expect(result).to.have.length.above(1);
           done();
         })
-        .catch(function (err) {
-          done(err);
-        });
+        .catch(done);
     });
 
     it('should create the migrations table for tenant 02', function (done) {
@@ -76,9 +74,7 @@ describe('connect-middleware with default settings', function() {
           expect(result).to.have.length.above(1);
           done();
         })
-        .catch(function (err) {
-          done(err);
-        });
+        .catch(done);
     });
   });
 });
