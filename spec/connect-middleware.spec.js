@@ -56,5 +56,25 @@ describe('connect-middleware with default settings', function() {
           done();
         });
     });
+
+    it('should create the migrations table for tenant 01', function (done) {
+      knex('01_knex_migrations')
+        .select()
+        .then(function (result) {
+          expect(result).to.have.length.above(1);
+          done();
+        })
+        .catch(done);
+    });
+
+    it('should create the migrations table for tenant 02', function (done) {
+      knex('02_knex_migrations')
+        .select()
+        .then(function (result) {
+          expect(result).to.have.length.above(1);
+          done();
+        })
+        .catch(done);
+    });
   });
 });
