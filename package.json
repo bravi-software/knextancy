@@ -1,6 +1,6 @@
 {
   "name": "knextancy",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Small library that provides a way of implementing multi-tenancy using table prefixes.",
   "main": "lib/index.js",
   "scripts": {
