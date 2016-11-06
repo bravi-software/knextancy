@@ -36,7 +36,6 @@
   "dependencies": {
     "babel-runtime": "^6.6.1",
     "debug": "^2.2.0",
-    "knex": "^0.11.0",
     "promise-async-cache": "^1.0.0"
   },
   "devDependencies": {
@@ -51,7 +50,7 @@
     "eslint-config-airbnb": "0.0.8",
     "express": "^4.10.1",
     "harmony-reflect": "^1.1.0",
-    "knex": "^0.10.0",
+    "knex": "^0.11.0",
     "mocha": "^2.4.5",
     "mysql": "^2.5.2",
     "supertest": "^0.14.0"
