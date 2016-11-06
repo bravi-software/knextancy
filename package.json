@@ -31,7 +31,7 @@
   },
   "bugs": "https://github.com/bravi-software/knextancy/issues",
   "peerDependencies": {
-    "knex": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0"
+    "knex": ">=0.8 && <=0.11"
   },
   "dependencies": {
     "babel-runtime": "^6.6.1",
