@@ -18,7 +18,8 @@ export function buildConfig (config, tenantId) {
   multitenantConfig.migrations = {...(multitenantConfig.migrations || {})};
 
   // custom migration with the table name prefix
-  multitenantConfig.migrations.tableName = `${tenantId}_${(multitenantConfig.migrations.tableName || 'knex_migrations')}`;
+  const tableName = multitenantConfig.migrations.tableName || 'knex_migrations';
+  multitenantConfig.migrations.tableName = `${tenantId}_${(tableName)}`;
 
   return multitenantConfig;
 }
