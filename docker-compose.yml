@@ -1,12 +1,22 @@
 mysql:
   image: mysql:5.7.5
   ports:
-    - '3306'
+    - 3306
   environment:
     MYSQL_ROOT_PASSWORD: root
-    MYSQL_PASSWORD: root
-    MYSQL_USER: root
+    MYSQL_USER: user
+    MYSQL_PASSWORD: password
     MYSQL_DATABASE: multitenant
+
+
+postgres:
+  image: postgres:9.4.5
+  ports:
+    - 5432
+  environment:
+    POSTGRES_USER: user
+    POSTGRES_PASSWORD: password
+    POSTGRES_DB: multitenant
 
 test:
   build: .
@@ -14,6 +24,7 @@ test:
   volumes:
     - .:/app
   links:
-    - mysql:db
+    - mysql:mysql
+    - postgres:postgres
   # environment:
   #   DEBUG: knextancy:tenant

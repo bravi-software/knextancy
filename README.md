@@ -79,6 +79,30 @@ The `knextancy.middleware` expects two parameters:
 * `knex` instance;
 * `options.header` the name of the HTTP header that will contain the tenant id.
 
+## Setup All Tenants
+
+Allow execute all migrations/seed for all existing tenants at once.
+
+Bellow is a usage example:
+
+```js
+knextancy.setupAllTenants(knex).then(function () {
+  // done
+});
+```
+
+## Fetch Tenants
+
+Based in the migration tables in the current database is possible to fetch the existing tenants.
+
+Bellow is a usage example:
+
+```js
+knextancy.fetchTenants(knex).then(function (tenants) {
+  // ['01', '02']
+});
+```
+
 ## Tests
 
 To run the tests using [Docker Compose](https://docs.docker.com/compose/):

@@ -1,10 +1,23 @@
 language: node_js
 
 node_js:
-  - "node"
+  - node
+  - 6
+  - 5
+  - 4
+  - 0.12
 
 env:
-  - DB_PORT=tcp://127.0.0.1:3306 DB_USER=root DB_PASSWORD="" DB_DATABASE=multitenant
+  global:
+    - MYSQL_PORT=tcp://127.0.0.1:3306
+    - MYSQL_USER=root
+    - MYSQL_PASSWORD=""
+    - MYSQL_DATABASE=multitenant
+    - POSTGRES_PORT=tcp://127.0.0.1:5432
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=""
+    - POSTGRES_DATABASE=multitenant
 
 before_script:
   - mysql -e 'create database multitenant;'
+  - psql -c 'create database multitenant;' -U postgres
