@@ -9,7 +9,7 @@ export default function (setupTenant) {
     return async function middleware (req, res, next) {
       const tenantId = req.header(header);
       if (typeof tenantId === 'undefined') {
-        return next(`Missing ${header} header`);
+        return res.status(500).send(`Missing ${header} header\n`);
       }
 
       req.knex = await setupTenant(baseKnex, tenantId);
