@@ -1,4 +1,9 @@
 import knex from 'knex';
+import QueryBuilder from 'knex/lib/query/builder';
+import Raw from 'knex/lib/raw';
+import Runner from 'knex/lib/runner';
+import SchemaBuilder from 'knex/lib/schema/builder';
+
 import { override, before, after } from './override';
 import createDebug from './debug';
 
@@ -38,19 +43,19 @@ export function install () {
     },
   });
 
-  override(knex.Client.prototype.QueryBuilder.prototype, 'toSQL', after(function(sql) {
+  override(QueryBuilder.prototype, 'toSQL', after(function(sql) {
     debug('knex.Client.prototype.QueryBuilder.prototype.toSQL', arguments);
     sql.sql = applyTenant(sql.sql, this.client.tenantId);
     return sql;
   }));
 
-  override(knex.Client.prototype.Raw.prototype, 'set', before(function(sql, bindings) {
+  override(Raw.prototype, 'set', before(function(sql, bindings) {
     debug('knex.Client.prototype.Raw.prototype.set', arguments);
     const tenantSQL = applyTenant(sql, this.client.tenantId);
     return [tenantSQL, bindings];
   }));
 
-  override(knex.Client.prototype.SchemaBuilder.prototype, 'toSQL', after(function(sql) {
+  override(SchemaBuilder.prototype, 'toSQL', after(function(sql) {
     debug('knex.Client.prototype.SchemaBuilder.prototype.toSQL', arguments);
     return sql.map(q => {
       q.sql = applyTenant(q.sql, this.client.tenantId);
@@ -58,7 +63,7 @@ export function install () {
     });
   }));
 
-  override(knex.Client.prototype.Runner.prototype, 'query', after(async function(promise, originalArgs) {
+  override(Runner.prototype, 'query', after(async function(promise, originalArgs) {
     debug('knex.Client.prototype.Runner.prototype.query', arguments);
     const options = originalArgs[0].options;
 

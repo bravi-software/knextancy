@@ -33,7 +33,7 @@
   },
   "bugs": "https://github.com/bravi-software/knextancy/issues",
   "peerDependencies": {
-    "knex": ">=0.8 && <=0.11"
+    "knex": ">=0.8 && <=0.13"
   },
   "dependencies": {
     "babel-runtime": "^6.6.1",
@@ -53,7 +53,7 @@
     "eslint-config-airbnb": "0.0.8",
     "express": "^4.10.1",
     "harmony-reflect": "^1.1.0",
-    "knex": "^0.11.0",
+    "knex": "^0.13.0",
     "knex-spec-helper": "^0.1.2",
     "mocha": "^2.4.5",
     "mysql": "^2.5.2",
