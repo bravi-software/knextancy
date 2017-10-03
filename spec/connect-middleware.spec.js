@@ -13,6 +13,16 @@ describe('connect-middleware with default settings', function() {
 
     app.use(knextancy.middleware(knex));
 
+    app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+      console.error(err.stack || err); // eslint-disable-line no-console
+
+      if (err) {
+        return res.status(500).send(err);
+      }
+
+      return next();
+    });
+
     app.get('/', function (req, res) {
       req.knex.select().from('$_users').then(function (users) {
         res.send(users);
@@ -51,7 +61,7 @@ describe('connect-middleware with default settings', function() {
         .end(function (err, res) {
           if (err) { return done(err); }
 
-          expect(res.text).to.eql('Missing x-client-id header\n');
+          expect(res.text).to.eql('Missing x-client-id header');
 
           done();
         });
