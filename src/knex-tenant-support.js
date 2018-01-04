@@ -24,7 +24,9 @@ export function buildConfig (config, tenantId) {
 
   // custom migration with the table name prefix
   const tableName = multitenantConfig.migrations.tableName || 'knex_migrations';
-  multitenantConfig.migrations.tableName = `${tenantId}_${(tableName)}`;
+
+  multitenantConfig.migrations.tableName = tableName.indexOf('$_') === -1 ?
+    `$_${tableName}` : tableName;
 
   return multitenantConfig;
 }
@@ -57,6 +59,7 @@ export function install () {
 
   override(SchemaBuilder.prototype, 'toSQL', after(function(sql) {
     debug('knex.Client.prototype.SchemaBuilder.prototype.toSQL', arguments);
+
     return sql.map(q => {
       q.sql = applyTenant(q.sql, this.client.tenantId);
       return q;
